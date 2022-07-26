@@ -1,0 +1,3 @@
+include:
+  - project: plantoncode/planton/pipeline/auto
+    file: magic.yaml
