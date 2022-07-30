@@ -19,3 +19,4 @@ RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOBU
     wget https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/$PROTOC_GEN_JAVA_GRPC_VERSION/protoc-gen-grpc-java-$PROTOC_GEN_JAVA_GRPC_VERSION-linux-x86_64.exe && \
     chmod +x protoc-gen-grpc-java-$PROTOC_GEN_JAVA_GRPC_VERSION-linux-x86_64.exe && \
     cp protoc-gen-grpc-java-$PROTOC_GEN_JAVA_GRPC_VERSION-linux-x86_64.exe /usr/local/bin/protoc-gen-grpc-java
+ADD build/planton-linux /usr/local/bin/planton
