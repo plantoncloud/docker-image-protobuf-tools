@@ -1,4 +1,4 @@
-FROM golang:1.17.8
+FROM golang:1.19.2
 RUN apt update && \
     apt install wget git unzip -y
 ARG DEBIAN_FRONTEND=noninteractive
