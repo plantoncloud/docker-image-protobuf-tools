@@ -2,11 +2,11 @@ FROM golang:1.17.8
 RUN apt update && \
     apt install wget git unzip -y
 ARG DEBIAN_FRONTEND=noninteractive
-ARG PROTOBUF_VERSION=21.4
+ARG PROTOBUF_VERSION=21.7
 ARG PROTOC_GEN_JAVA_GRPC_VERSION=1.45.0
 ARG PROTOC_GEN_GO_VERSION=v1.26
 ARG PROTOC_GEN_GO_GRPC_VERSION=v1.1
-ARG BUF_CLI_VERSION=1.6.0
+ARG BUF_CLI_VERSION=1.8.0
 RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOBUF_VERSION/protoc-$PROTOBUF_VERSION-linux-x86_64.zip && \
     unzip protoc-$PROTOBUF_VERSION-linux-x86_64.zip && \
     chmod +x bin/protoc && \
