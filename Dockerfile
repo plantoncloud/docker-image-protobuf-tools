@@ -73,6 +73,7 @@ RUN wget https://storage.googleapis.com/planton-pcs-artifact-file-repo/tool/cli/
     cp buf-Linux-x86_64 /usr/local/bin/buf && \
     wget  https://go.dev/dl/go1.19.linux-amd64.tar.gz && \
     tar -xvf go1.19.linux-amd64.tar.gz && \
+    rm -f go1.19.linux-amd64.tar.gz && \
     mv go /usr/local && \
     GOBIN=/usr/local/bin/ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@$PROTOC_GEN_GO_GRPC_VERSION && \
     GOBIN=/usr/local/bin/ go install google.golang.org/protobuf/cmd/protoc-gen-go@$PROTOC_GEN_GO_VERSION && \
