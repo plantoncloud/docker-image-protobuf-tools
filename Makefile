@@ -7,5 +7,7 @@ docker_image=${docker_image_repo}/${docker_image_path}:${docker_image_tag}
 .PHONY: build
 build:
 	docker build --platform linux/amd64 -t ${docker_image} .
-release:
+
+.PHONY: release
+release: build
 	docker push ${docker_image}
