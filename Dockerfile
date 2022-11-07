@@ -10,7 +10,7 @@ RUN apt update && \
 # protoc compiler and plugin versions
 
 # protoc --version
-ARG PROTOBUF_VERSION=21.7
+ARG PROTOBUF_VERSION=21.9
 
 # protoc-gen-go --version
 ARG PROTOC_GEN_GO_VERSION=v1.28.1
