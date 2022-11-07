@@ -9,8 +9,15 @@ ARG PROTOC_GEN_GO_VERSION=v1.28.1
 # protoc-gen-go-grpc --version
 ARG PROTOC_GEN_GO_GRPC_VERSION=v1.1.0
 ARG PROTOC_GEN_JAVA_GRPC_VERSION=1.45.0
-ARG BUF_CLI_VERSION=1.8.0
-RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOBUF_VERSION/protoc-$PROTOBUF_VERSION-linux-x86_64.zip && \
+
+ARG BUF_CLI_VERSION=1.9.0
+ARG PLANTON_CLI_VERSION=v0.0.13
+
+RUN wget https://storage.googleapis.com/planton-pcs-artifact-file-repo/tool/cli/download/planton-cli-$PLANTON_CLI_VERSION-linux && \
+    chmod +x planton-cli-$PLANTON_CLI_VERSION-linux && \
+    mv planton-cli-$PLANTON_CLI_VERSION-linux planton && \
+    cp planton /usr/local/bin && \
+    wget https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOBUF_VERSION/protoc-$PROTOBUF_VERSION-linux-x86_64.zip && \
     unzip protoc-$PROTOBUF_VERSION-linux-x86_64.zip && \
     chmod +x bin/protoc && \
     cp bin/protoc /usr/local/bin && \
