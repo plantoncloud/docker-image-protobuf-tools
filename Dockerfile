@@ -4,8 +4,35 @@ WORKDIR /app
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# https://github.com/apple/swift/releases/latest
+ARG SWIFT_VERSION=5.7
+
 RUN apt update && \
-    apt install wget git unzip make -y
+    apt install -y wget git unzip make && \
+    # install swift dependencies https://www.swift.org/download/#installation
+    apt install -y clang \
+    binutils \
+    gnupg2 \
+    libc6-dev \
+    libcurl4 \
+    libedit2 \
+    libgcc-9-dev \
+    libpython2.7-dev \
+    libpython2.7 \
+    libsqlite3-0 \
+    libstdc++-9-dev \
+    libxml2 \
+    libz3-dev \
+    pkg-config \
+    tzdata \
+    uuid-dev \
+    zlib1g-dev && \
+    wget https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
+    tar -xvzf swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
+    rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
+    mv swift-5.7-RELEASE-ubuntu20.04 /usr/share/swift
+
+ENV PATH="${PATH}:/usr/share/swift/usr/bin"
 
 # protoc compiler and plugin versions
 
@@ -20,9 +47,6 @@ ARG PROTOC_GEN_GO_GRPC_VERSION=v1.1.0
 
 ARG PROTOC_GEN_JAVA_GRPC_VERSION=1.45.0
 
-# https://github.com/apple/swift/releases/latest
-ARG SWIFT_VERSION=5.7
-
 # https://github.com/apple/swift-protobuf/releases/latest
 # protoc-gen-swift --version
 # this is not used as https://github.com/grpc/grpc-swift/releases/latest zip contains both protobuf and grpc plugins
@@ -33,31 +57,12 @@ ARG PROTOC_GEN_SWIFT_GRPC_VERSION=1.13.0
 
 ARG BUF_CLI_VERSION=1.9.0
 
-ARG PLANTON_CLI_VERSION=v0.0.13
+ARG PLANTON_CLI_VERSION=v0.0.14
 
 ENV GO111MODULE=on
 ENV GOPATH=/go
 ENV GOROOT=/usr/local/go
 ENV PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-
-# install swift dependencies https://www.swift.org/download/#installation
-RUN apt install -y clang \
-                binutils \
-                gnupg2 \
-                libc6-dev \
-                libcurl4 \
-                libedit2 \
-                libgcc-9-dev \
-                libpython2.7-dev \
-                libpython2.7 \
-                libsqlite3-0 \
-                libstdc++-9-dev \
-                libxml2 \
-                libz3-dev \
-                pkg-config \
-                tzdata \
-                uuid-dev \
-                zlib1g-dev
 
 RUN wget https://storage.googleapis.com/planton-pcs-artifact-file-repo/tool/cli/download/planton-cli-$PLANTON_CLI_VERSION-linux && \
     chmod +x planton-cli-$PLANTON_CLI_VERSION-linux && \
@@ -80,15 +85,9 @@ RUN wget https://storage.googleapis.com/planton-pcs-artifact-file-repo/tool/cli/
     wget https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/$PROTOC_GEN_JAVA_GRPC_VERSION/protoc-gen-grpc-java-$PROTOC_GEN_JAVA_GRPC_VERSION-linux-x86_64.exe && \
     chmod +x protoc-gen-grpc-java-$PROTOC_GEN_JAVA_GRPC_VERSION-linux-x86_64.exe && \
     cp protoc-gen-grpc-java-$PROTOC_GEN_JAVA_GRPC_VERSION-linux-x86_64.exe /usr/local/bin/protoc-gen-grpc-java && \
-    wget https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
-    tar -xvzf swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
-    rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
-    mv swift-5.7-RELEASE-ubuntu20.04 /usr/share/swift && \
     wget https://github.com/grpc/grpc-swift/releases/download/$PROTOC_GEN_SWIFT_GRPC_VERSION/protoc-grpc-swift-plugins-linux-x86_64-$PROTOC_GEN_SWIFT_GRPC_VERSION.zip && \
     unzip protoc-grpc-swift-plugins-linux-x86_64-$PROTOC_GEN_SWIFT_GRPC_VERSION.zip && \
     rm -f protoc-grpc-swift-plugins-linux-x86_64-$PROTOC_GEN_SWIFT_GRPC_VERSION.zip && \
     chmod +x protoc-gen-grpc-swift protoc-gen-swift && \
     cp protoc-gen-grpc-swift /usr/local/bin && \
     cp protoc-gen-swift /usr/local/bin
-
-ENV PATH="${PATH}:/usr/share/swift/usr/bin"
