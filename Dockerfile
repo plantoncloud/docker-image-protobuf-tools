@@ -4,9 +4,6 @@ WORKDIR /app
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# https://github.com/apple/swift/releases/latest
-ARG SWIFT_VERSION=5.7
-
 RUN apt update && \
     apt install -y wget git unzip make && \
     # install swift dependencies https://www.swift.org/download/#installation
@@ -26,8 +23,13 @@ RUN apt update && \
     pkg-config \
     tzdata \
     uuid-dev \
-    zlib1g-dev && \
-    wget https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
+    zlib1g-dev
+
+# https://github.com/apple/swift/releases/latest
+ARG SWIFT_VERSION=5.7
+
+# install swift
+RUN    wget https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
     tar -xvzf swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
     rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu20.04.tar.gz && \
     mv swift-5.7-RELEASE-ubuntu20.04 /usr/share/swift
