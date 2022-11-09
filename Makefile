@@ -1,4 +1,4 @@
-v?=local
+v?=v0.0.3
 docker_image_repo=us-central1-docker.pkg.dev/pcs-org-shared-services-5n/planton-pcs-docker-repo-external
 docker_image_path=gitlab.com/plantoncode/planton/oss/docker-images/protobuf
 docker_image_tag?=${v}
