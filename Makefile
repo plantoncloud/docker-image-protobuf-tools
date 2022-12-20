@@ -1,6 +1,6 @@
 docker_image_repo=us-central1-docker.pkg.dev/planton-shared-services-jx/planton-pcs-docker-repo-external
 docker_image_path=gitlab.com/plantoncode/planton/oss/docker-images/protobuf
-docker_image_tag?=proto-compilers-bundle-v0.0.1-planton-cli-v0.0.29
+docker_image_tag?=proto-compilers-bundle-v0.0.1-planton-cli-v0.0.31
 docker_image=${docker_image_repo}/${docker_image_path}:${docker_image_tag}
 
 .PHONY: build
