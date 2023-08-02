@@ -36,10 +36,12 @@ RUN    wget https://download.swift.org/swift-$SWIFT_VERSION-release/ubuntu2004/s
 
 ENV PATH="${PATH}:/usr/share/swift/usr/bin"
 
+ENV GOLANG_VERSION=1.20
+
 # protoc compiler and plugin versions
 
 # protoc --version
-ARG PROTOBUF_VERSION=21.9
+ARG PROTOBUF_VERSION=23.2
 
 # protoc-gen-go --version
 ARG PROTOC_GEN_GO_VERSION=v1.28.1
@@ -47,7 +49,7 @@ ARG PROTOC_GEN_GO_VERSION=v1.28.1
 # protoc-gen-go-grpc --version
 ARG PROTOC_GEN_GO_GRPC_VERSION=v1.1.0
 
-ARG PROTOC_GEN_JAVA_GRPC_VERSION=1.45.0
+ARG PROTOC_GEN_JAVA_GRPC_VERSION=1.55.1
 
 # https://github.com/apple/swift-protobuf/releases/latest
 # protoc-gen-swift --version
@@ -55,18 +57,18 @@ ARG PROTOC_GEN_JAVA_GRPC_VERSION=1.45.0
 # ARG PROTOC_GEN_SWIFT_VERSION=1.20.2
 
 # https://github.com/grpc/grpc-swift/releases/latest
-ARG PROTOC_GEN_SWIFT_GRPC_VERSION=1.13.0
+ARG PROTOC_GEN_SWIFT_GRPC_VERSION=1.18.0
 
-ARG BUF_CLI_VERSION=1.9.0
+ARG BUF_CLI_VERSION=1.18.0
 
-ARG PLANTON_CLI_VERSION=v0.0.37
+ARG PLANTON_CLI_VERSION=v0.0.61
 
 ENV GO111MODULE=on
 ENV GOPATH=/go
 ENV GOROOT=/usr/local/go
 ENV PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-RUN wget https://storage.googleapis.com/afs-planton-pos-uc1-ext-file-repo/tool/cli/download/planton-cli-$PLANTON_CLI_VERSION-linux && \
+RUN wget https://storage.googleapis.com/planton-cli/$PLANTON_CLI_VERSION/planton-cli-$PLANTON_CLI_VERSION-linux && \
     chmod +x planton-cli-$PLANTON_CLI_VERSION-linux && \
     mv planton-cli-$PLANTON_CLI_VERSION-linux planton && \
     cp planton /usr/local/bin && \
@@ -78,9 +80,9 @@ RUN wget https://storage.googleapis.com/afs-planton-pos-uc1-ext-file-repo/tool/c
     wget https://github.com/bufbuild/buf/releases/download/v$BUF_CLI_VERSION/buf-Linux-x86_64 && \
     chmod +x buf-Linux-x86_64 && \
     cp buf-Linux-x86_64 /usr/local/bin/buf && \
-    wget  https://go.dev/dl/go1.19.linux-amd64.tar.gz && \
-    tar -xvf go1.19.linux-amd64.tar.gz && \
-    rm -f go1.19.linux-amd64.tar.gz && \
+    wget  https://go.dev/dl/go$GOLANG_VERSION.linux-amd64.tar.gz && \
+    tar -xvf go$GOLANG_VERSION.linux-amd64.tar.gz && \
+    rm -f go$GOLANG_VERSION.linux-amd64.tar.gz && \
     mv go /usr/local && \
     GOBIN=/usr/local/bin/ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@$PROTOC_GEN_GO_GRPC_VERSION && \
     GOBIN=/usr/local/bin/ go install google.golang.org/protobuf/cmd/protoc-gen-go@$PROTOC_GEN_GO_VERSION && \
